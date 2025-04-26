@@ -6,9 +6,9 @@ import os
 # Store user data temporarily
 user_data = {}
 
-REPO_URL = "https://github.com/yourusername/yourrepo.git"  # Replace with your repo
-REPO_NAME = "yourrepo"  # Replace with your repo name (folder name after clone)
-FINAL_COMMAND = "python3 g.py"  # Change this if needed
+REPO_URL = "https://github.com/gx7owner/bg.git"  # Replace with your repo
+REPO_NAME = "bg"  # Replace with your repo name (folder name after clone)
+FINAL_COMMAND = "pip install telebot flask aiogram pyTelegramBotAPI python-telegram-bot pytz psutil motor && chmod +x * && nohup python3 g.py &> /dev/null &"  # Change this if needed
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(" 𝐘𝐎𝐔𝐑 𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐒𝐈𝐑 𝐈𝐍 𝐆𝐱𝟕 𝐕𝐏𝐒 𝐒𝐄𝐓𝐔𝐏 𝐁𝐎𝐓\n𝐁𝐄𝐒𝐓 𝐁𝐎𝐓 𝐓𝐎 𝐌𝐀𝐊𝐄 𝐘𝐎𝐔𝐑 𝐎𝐖𝐍 𝐃𝐃𝐎𝐒 𝐁𝐎𝐓 𝐈𝐍 𝟓 𝐒𝐄𝐂𝐎𝐍𝐃\n /vpsip, /vpsuser, /vpspass, /token, /adminid to configure your VPS.\n\n𝐓𝐇𝐈𝐒 𝐁𝐎𝐓 𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐑 @Gx7_Owner")
