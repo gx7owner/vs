@@ -1,6 +1,7 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 import paramiko
+import json
 
 # Store user data temporarily
 user_data = {}
@@ -53,10 +54,15 @@ async def setup_vps(update: Update, data):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(data['vpsip'], username=data['vpsuser'], password=data['vpspass'])
 
+        # Prepare JSON config string
+        config_content = json.dumps({
+            "BOT_TOKEN": data['token'],
+            "ADMIN_ID": int(data['adminid'])
+        })
+
         commands = [
             f"git clone {REPO_URL}",
-            f"cd {REPO_NAME} && sed -i \"12s/.*/BOT_TOKEN = '{data['token']}'/\" g.py",
-            f"cd {REPO_NAME} && sed -i '13s/.*/ADMIN_ID = {data['adminid']}/' g.py",
+            f"cd {REPO_NAME} && echo '{config_content}' > config.json",
             f"cd {REPO_NAME} && {FINAL_COMMAND}"
         ]
 
