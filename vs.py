@@ -50,16 +50,22 @@ async def send_long_message(update, text):
 
 async def setup_vps(update: Update, data):
     try:
+        # Setup SSH client
         ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        
+        # Automatically add the host key if it's not recognized (this is safer than auto-adding all unknown keys)
+        ssh.set_missing_host_key_policy(paramiko.RejectPolicy())  # Change to AutoAddPolicy() for automatic addition (less secure)
+        
+        # Connect to the VPS
         ssh.connect(data['vpsip'], username=data['vpsuser'], password=data['vpspass'])
-
+        
         # Prepare JSON config string
         config_content = json.dumps({
             "BOT_TOKEN": data['token'],
             "ADMIN_ID": int(data['adminid'])
         })
 
+        # List of commands to be executed on the VPS
         commands = [
             f"git clone {REPO_URL}",
             f"cd {REPO_NAME} && echo '{config_content}' > config.json",
@@ -79,7 +85,7 @@ async def setup_vps(update: Update, data):
         await update.message.reply_text("𝗔𝗹𝗹 𝘀𝗲𝘁𝘂𝗽 𝗶𝘀 𝗰𝗼𝗺𝗽𝗹𝗲𝘁𝗲. 𝗜𝗳 𝘆𝗼𝘂𝗿 𝗯𝗼𝘁 𝗶𝘀 𝘄𝗼𝗿𝗸𝗶𝗻𝗴 𝗯𝘂𝘁 𝘁𝗵𝗲 𝗽𝗶𝗻𝗴 𝗶𝘀 𝗻𝗼𝘁 𝗴𝗼𝗶𝗻𝗴 𝗵𝗶𝗴𝗵, 𝗳𝗶𝗿𝘀𝘁 𝗰𝗵𝗲𝗰𝗸 𝘆𝗼𝘂𝗿 𝗩𝗣𝗦. 𝗜𝗳 𝘁𝗵𝗲 𝗶𝘀𝘀𝘂𝗲 𝗽𝗲𝗿𝘀𝗶𝘀𝘁𝘀, 𝗰𝗼𝗻𝘁𝗮𝗰𝘁 @Gx7_Owner 𝗳𝗼𝗿 𝗮 𝘀𝗼𝗹𝘂𝘁𝗶𝗼𝗻, 𝗮𝘀 𝘁𝗵𝗶𝘀 𝗯𝗶𝗻𝗮𝗿𝘆 𝘄𝗼𝗿𝗸𝘀 𝗼𝗻𝗹𝘆 𝗼𝗻 𝘀𝗽𝗲𝗰𝗶𝗳𝗶𝗰 𝗼𝗽𝗲𝗿𝗮𝘁𝗶𝗻𝗴 𝘀𝘆𝘀𝘁𝗲𝗺𝘀 𝗮𝗻𝗱 𝗩𝗣𝗦 𝗰𝗼𝗻𝗳𝗶𝗴𝘂𝗿𝗮𝘁𝗶𝗼𝗻𝘀.")
 
     except Exception as e:
-        await send_long_message(update, f"Failed: {str(e)}")
+        await send_long_message(update, f"Failed: {str(e)}\nTraceback: {repr(e)}")
 
 def main():
     bot_token = "7543413110:AAEPtLAPXEJvaO-rUQ-9ztUfEd_aegYAwI8"
