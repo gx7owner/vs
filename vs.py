@@ -82,7 +82,7 @@ async def setup_vps(update: Update, data):
         await send_long_message(update, f"Failed: {str(e)}")
 
 def main():
-    bot_token = "7721614824:AAGfQqCpE9zmD38b2Xq1nyiI7yqBNKV0wDg"
+    bot_token = "7543413110:AAEPtLAPXEJvaO-rUQ-9ztUfEd_aegYAwI8"
     app = ApplicationBuilder().token(bot_token).build()
 
     app.add_handler(CommandHandler("start", start))
