@@ -55,7 +55,7 @@ async def setup_vps(update: Update, data):
 
         commands = [
             f"git clone {REPO_URL}",
-            f"cd {REPO_NAME} && sed -i '12s/.*/BOT_TOKEN = \'{data['token']}\'/' g.py",
+            f"cd {REPO_NAME} && sed -i \"12s/.*/BOT_TOKEN = '{data['token']}'/\" g.py",
             f"cd {REPO_NAME} && sed -i '13s/.*/ADMIN_ID = {data['adminid']}/' g.py",
             f"cd {REPO_NAME} && {FINAL_COMMAND}"
         ]
